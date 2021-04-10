@@ -11,17 +11,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class SupportController {
-    
+
     @Autowired
     private SupportRepository supportRepository;
-  
+
     @PostMapping("/openTicket")
     public void openTicket(@RequestBody SupportEntity supportEntity) {
         supportRepository.save(supportEntity);
     }
-  
-    @GetMapping("/getTickets")
-    public Iterable<SupportEntity> getTickets() {
+
+    @GetMapping("/getAllTickets")
+    public Iterable<SupportEntity> getAllTickets() {
         return supportRepository.findAll();
     }
+
 }
