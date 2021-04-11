@@ -24,13 +24,17 @@ public class SupportEntity {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "status")
+    private String status;
+
     public SupportEntity() {
     }
 
-    public SupportEntity(String username, String subject, String description) {
+    public SupportEntity(String username, String subject, String description, String status) {
         this.username = username;
         this.subject = subject;
         this.description = description;
+        this.status = status;
     }
 
     public long getId() {
@@ -63,6 +67,14 @@ public class SupportEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }
