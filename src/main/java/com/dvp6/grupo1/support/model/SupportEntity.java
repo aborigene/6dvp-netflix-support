@@ -1,3 +1,9 @@
+/*
+  Autor: Guilherme Rubio
+  e-mail: guilherme.rubio@outlook.com.br
+  Data: 14/04/2021
+*/
+
 package com.dvp6.grupo1.support.model;
 
 import javax.persistence.Column;
@@ -7,10 +13,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/*
+  Classe responsável por criar uma entidade vinculada com o banco de dados.
+*/
 @Entity
 @Table(name = "support")
 public class SupportEntity {
 
+    /*
+      Vinculando a variaveis as colunas do banco de dados.
+    */    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -27,6 +39,10 @@ public class SupportEntity {
     @Column(name = "status")
     private String status;
 
+
+    /*
+      Método construtor da classe.
+    */
     public SupportEntity() {
     }
 
@@ -37,6 +53,9 @@ public class SupportEntity {
         this.status = status;
     }
 
+    /*
+      Métodos Getters e Setters.
+    */    
     public long getId() {
         return this.id;
     }

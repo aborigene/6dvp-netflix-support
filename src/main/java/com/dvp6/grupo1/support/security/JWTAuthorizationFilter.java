@@ -1,3 +1,9 @@
+/*
+  Autor: Guilherme Rubio
+  e-mail: guilherme.rubio@outlook.com.br
+  Data: 13/04/2021
+*/
+
 package com.dvp6.grupo1.support.security;
 
 import java.io.IOException;
@@ -20,12 +26,49 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 
+/*
+  Classe responsável pela validação do token jwt.
+*/
 public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
     private final String HEADER = "Authorization";
     private final String PREFIX = "Bearer ";
     private final String SECRET = "mySecretKey";
 
+    /*
+      Método responsável por validar a presença do token jwt no header da requisição.
+    */    
+    private boolean checkJWTToken(HttpServletRequest request, HttpServletResponse res) {
+        String authenticationHeader = request.getHeader(HEADER);
+        if (authenticationHeader == null || !authenticationHeader.startsWith(PREFIX))
+            return false;
+        return true;
+    }
+
+    /*
+      Método responsável por validar a secret do token jwt.
+    */    
+    private Claims validateToken(HttpServletRequest request) {
+        String jwtToken = request.getHeader(HEADER).replace(PREFIX, "");
+        return Jwts.parser().setSigningKey(SECRET.getBytes()).parseClaimsJws(jwtToken).getBody();
+    }
+
+    /*
+      Método responsável por capturar as clains do token jwt.
+    */      
+    private void setUpSpringAuthentication(Claims claims) {
+        @SuppressWarnings("unchecked")
+        List<String> authorities = (List<String>) claims.get("authorities");
+
+        UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(claims.getSubject(), null,
+                authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
+        SecurityContextHolder.getContext().setAuthentication(auth);
+
+    }
+
+    /*
+      Método responsável por filtrar as requisições e validar o token jwt.
+    */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
         try {
@@ -46,27 +89,4 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
             return;
         }
     }
-
-    private Claims validateToken(HttpServletRequest request) {
-        String jwtToken = request.getHeader(HEADER).replace(PREFIX, "");
-        return Jwts.parser().setSigningKey(SECRET.getBytes()).parseClaimsJws(jwtToken).getBody();
-    }
-
-    private void setUpSpringAuthentication(Claims claims) {
-        @SuppressWarnings("unchecked")
-        List<String> authorities = (List<String>) claims.get("authorities");
-
-        UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(claims.getSubject(), null,
-                authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
-        SecurityContextHolder.getContext().setAuthentication(auth);
-
-    }
-
-    private boolean checkJWTToken(HttpServletRequest request, HttpServletResponse res) {
-        String authenticationHeader = request.getHeader(HEADER);
-        if (authenticationHeader == null || !authenticationHeader.startsWith(PREFIX))
-            return false;
-        return true;
-    }
-
 }
