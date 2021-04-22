@@ -21,6 +21,16 @@ Microserviço para abertura/consulta de chamados, trabalho conclusão de curso.
 <p>Retorna lista com todos os chamados</p>
 <p>Nível de permissão: permitAll
  
+## /getTicketsByUser
+<p>Retorna lista com todos os chamados por usuário</p>
+<p>Parâmetro: <b>username</b></p>
+<p>Nível de permissão: permitAll
+ 
+## /getTicketsByStatus
+<p>Retorna lista com todos os chamados por status.</p>
+<p>Parâmetro: <b>status</b></p>
+<p>Nível de permissão: permitAll
+ 
 ## Variáveis de ambiente.
 <p>Configurações do MySQL</p>
 <p>DB_SERVER = <i>Servidor do MySQL</i></p>
