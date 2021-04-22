@@ -21,8 +21,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SupportBrokerConfig {
 
-    public static final String QUEUE = "support-created";
-    public static final String EXCHANGE_NAME = "support";
+    public static final String QUEUE = "support-queue";
+    public static final String EXCHANGE_NAME = "support-exchange";
     public static final String ROUTING_KEY = "support-routing";
 
     /*
