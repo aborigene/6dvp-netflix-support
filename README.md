@@ -2,6 +2,9 @@
 Microserviço para abertura/consulta de chamados, trabalho conclusão de curso.
 
 <p>Porta de execução: <b>8091</b></p>
+## Segurança
+<p>Para acessar as APIs necessário passar um token JWT no header da requisição para autorização.</p>
+<p>Para gerar o token JWT válido, necessário utilizar o micro-serviço de autorização.</p>
 
 ## Segurança
 <p>Para acessar as APIs necessário passar um token JWT no header da requisição para autorização.</p>
