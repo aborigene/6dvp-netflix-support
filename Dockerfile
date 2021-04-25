@@ -10,7 +10,7 @@ RUN mvn clean package -DskipTests
 #
 # Package stage
 #
-FROM openjdk:11.0.10-jre-slim
+FROM openjdk:11.0.11-jre
 COPY --from=build /home/app/target/support-1.0.0.jar /usr/local/lib/support-1.0.0.jar
 EXPOSE 8091
 ENTRYPOINT ["java","-jar","/usr/local/lib/support-1.0.0.jar"]
