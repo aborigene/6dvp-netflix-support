@@ -24,8 +24,7 @@ public class SupportSecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     http.csrf().disable();
     http.addFilterBefore(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class).authorizeRequests()
-        .antMatchers("/getAllTickets").authenticated().antMatchers("/getTicketsByUser").authenticated()
-        .antMatchers("/getTicketsByStatus").authenticated();
+        .anyRequest().authenticated();
 
   }
 }
