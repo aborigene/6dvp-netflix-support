@@ -10,6 +10,8 @@ import com.dvp6.grupo1.support.model.SupportEntity;
 import com.dvp6.grupo1.support.model.SupportRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,39 +23,47 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class SupportController {
 
-    /*
-      Instancia a classe do repositório do JPA.  
-    */
-    @Autowired
-    private SupportRepository supportRepository;
+  /*
+   * Instancia a classe do repositório do JPA.
+   */
+  @Autowired
+  public SupportRepository supportRepository;
 
-    /*
-      Criando a rota /getAllTickets com o verbo GET.
-      Retorna a lista com todos os chamados.
-    */
-    @GetMapping("/getAllTickets")
-    public Iterable<SupportEntity> getAllTickets() {
-        return supportRepository.findAll();
-    }
+  /*
+   * Criando a rota / com o verbo GET.
+   */
+  @GetMapping("/")
+  public ResponseEntity<String> home() {
+    return new ResponseEntity<>("Ok!", HttpStatus.OK);
+  }
 
-    /*
-      Criando a rota /getTicketsByUser com o verbo GET.
-      Retorna a lista com todos os chamados por usuário.
-    */
-    @GetMapping("/getTicketsByUser")
-    @ResponseBody
-    public Iterable<SupportEntity> getTicketsByUser(@RequestParam String username) {
-        return supportRepository.findByUsername(username);
-    }
+  /*
+   * Criando a rota /getAllTickets com o verbo GET. Retorna a lista com todos os
+   * chamados.
+   */
+  @GetMapping("/getAllTickets")
+  public Iterable<SupportEntity> getAllTickets() {
+    return supportRepository.findAll();
+  }
 
-    /*
-      Criando a rota /getTicketsByStatus com o verbo GET.
-      Retorna a lista com todos os chamados por status.
-    */
-    @GetMapping("/getTicketsByStatus")
-    @ResponseBody
-    public Iterable<SupportEntity> getTicketsByStatus(@RequestParam String status) {
-        return supportRepository.findByStatus(status);
-    }
+  /*
+   * Criando a rota /getTicketsByUser com o verbo GET. Retorna a lista com todos
+   * os chamados por usuário.
+   */
+  @GetMapping("/getTicketsByUser")
+  @ResponseBody
+  public Iterable<SupportEntity> getTicketsByUser(@RequestParam String username) {
+    return supportRepository.findByUsername(username);
+  }
+
+  /*
+   * Criando a rota /getTicketsByStatus com o verbo GET. Retorna a lista com todos
+   * os chamados por status.
+   */
+  @GetMapping("/getTicketsByStatus")
+  @ResponseBody
+  public Iterable<SupportEntity> getTicketsByStatus(@RequestParam String status) {
+    return supportRepository.findByStatus(status);
+  }
 
 }

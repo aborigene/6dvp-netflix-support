@@ -7,6 +7,7 @@
 package com.dvp6.grupo1.support.security;
 
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -18,6 +19,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SupportSecurityConfig extends WebSecurityConfigurerAdapter {
 
   /*
+   * Deixa o Swagger publico.
+   */
+  @Override
+  public void configure(WebSecurity http) throws Exception {
+    http.ignoring().antMatchers("/", "/swagger*/**", "/v3/api-docs*/**");
+  }
+
+  /*
    * Método responsável filtar as permissões para as rotas com base no token jwt.
    */
   @Override
@@ -25,6 +34,5 @@ public class SupportSecurityConfig extends WebSecurityConfigurerAdapter {
     http.csrf().disable();
     http.addFilterBefore(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class).authorizeRequests()
         .anyRequest().authenticated();
-
   }
 }

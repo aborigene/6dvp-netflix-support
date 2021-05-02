@@ -27,13 +27,22 @@ public class SupportBrokerConsumer {
     @Autowired
     private SupportRepository supportRepository;
     
+    @Autowired
+    private SupportEntity supportEntity;
+
     /*
       Método para ler a fila e salvas os dados no banco.
     */
     @RabbitListener(queues = SupportBrokerConfig.QUEUE)
     public void consumer(Message message) throws JsonMappingException, JsonProcessingException {
+      try {
         ObjectMapper mapper = new ObjectMapper();        
-        SupportEntity supportEntity = mapper.readValue(new String(message.getBody()), SupportEntity.class);
+        supportEntity = mapper.readValue(new String(message.getBody()), SupportEntity.class);
+        supportEntity.setStatus("open");
         supportRepository.save(supportEntity);
+      } catch (Exception e) {
+        System.out.println("erro: " + e);
+      }  
+      
     }
 }
