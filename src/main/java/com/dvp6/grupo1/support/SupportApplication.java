@@ -24,6 +24,9 @@ public class SupportApplication {
     SpringApplication.run(SupportApplication.class, args);
   }
 
+  /*
+    Inicializa o entity manager junto com o microserviço.
+  */
   @Bean
 	public SupportEntity supportEntity() {
 		return new SupportEntity();

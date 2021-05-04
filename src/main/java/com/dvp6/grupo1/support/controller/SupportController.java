@@ -13,9 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 /*
   Classe responsável por expor as APIs.
@@ -34,7 +35,7 @@ public class SupportController {
    */
   @GetMapping("/")
   public ResponseEntity<String> home() {
-    return new ResponseEntity<>("Ok!", HttpStatus.OK);
+    return new ResponseEntity<>(HttpStatus.OK);
   }
 
   /*
@@ -52,7 +53,7 @@ public class SupportController {
    */
   @GetMapping("/getTicketsByUser")
   @ResponseBody
-  public Iterable<SupportEntity> getTicketsByUser(@RequestParam String username) {
+  public Iterable<SupportEntity> getTicketsByUser(@RequestBody String username) {
     return supportRepository.findByUsername(username);
   }
 
@@ -62,7 +63,7 @@ public class SupportController {
    */
   @GetMapping("/getTicketsByStatus")
   @ResponseBody
-  public Iterable<SupportEntity> getTicketsByStatus(@RequestParam String status) {
+  public Iterable<SupportEntity> getTicketsByStatus(@RequestBody String status) {
     return supportRepository.findByStatus(status);
   }
 
